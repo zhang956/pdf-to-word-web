@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.runtime/
+.superdesign/selected-draft.html
+.env
+.env.*
+说明.txt
+*.pem
+*.key

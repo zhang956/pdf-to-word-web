@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: pdf-to-word-web
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_PASSWORD
+        sync: false
+      - key: SESSION_SECRET
+        sync: false
+      - key: TRUST_RENDER_PROXY
+        value: "1"
+      - key: MAX_FILE_SIZE_MB
+        value: "30"
+      - key: MAX_PDF_PAGES
+        value: "100"
+      - key: CONVERSION_WORKERS
+        value: "1"
+      - key: MAX_CONVERSION_JOBS
+        value: "2"

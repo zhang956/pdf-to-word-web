@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>登录 · PDF 转 Word</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <main class="login-shell">
+    <section class="login-card" aria-labelledby="login-title">
+      <div class="brand-mark" aria-hidden="true">PDF</div>
+      <p class="eyebrow">受保护的小工具</p>
+      <h1 id="login-title">输入访问密码</h1>
+      <p class="login-copy">登录后即可将文字型或扫描型 PDF 转为可编辑 Word 文档。</p>
+      <form method="post" action="/login" class="login-form">
+        <label for="password">访问密码</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required autofocus>
+        <p class="login-error" role="alert">{{ERROR}}</p>
+        <button type="submit">进入工具</button>
+      </form>
+      <p class="privacy-note">上传文件仅用于本次转换，完成下载或超时后清理。</p>
+    </section>
+  </main>
+</body>
+</html>

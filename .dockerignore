@@ -1,0 +1,15 @@
+.git
+.gitignore
+.venv
+.runtime
+.pytest_cache
+.superdesign
+__pycache__
+*.pyc
+.env
+.env.*
+说明.txt
+*.pem
+*.key
+tests
+docs

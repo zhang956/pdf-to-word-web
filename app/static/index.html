@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="将文本或扫描 PDF 转换为可编辑 Word 文档">
+  <title>PDF 转 Word</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <div class="page-grid" aria-hidden="true"></div>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M8 13h8M8 17h6"/></svg>
+      </span>
+      <strong>PDF 转 Word</strong>
+      <span class="product-code">LOCAL UTILITY / 01</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="privacy-status"><span></span>密码保护 · 临时处理</div>
+      <form action="/logout" method="post"><button class="logout-button" type="submit">退出</button></form>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="intro" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">DOCUMENT CONVERSION / PDF → DOCX</p>
+        <h1 id="page-title">把 PDF 变成可编辑的 Word</h1>
+      </div>
+      <p class="intro-copy">支持文本 PDF 与扫描 PDF。中文和英文文档将通过 OCR 识别，优先生成可编辑内容。</p>
+    </section>
+
+    <p class="service-notice">免费服务休眠后，首次打开可能需要约一分钟。支持不超过 30 MB、100 页的 PDF；文件仅用于本次转换。</p>
+
+    <section class="workspace" aria-label="PDF 转换工作区">
+      <div class="upload-column">
+        <div class="section-heading">
+          <div><p class="eyebrow">01 / SELECT SOURCE</p><h2>选择一个 PDF 文件</h2></div>
+          <span class="limit">MAX 30 MB / 100 页</span>
+        </div>
+
+        <input id="file-input" type="file" accept="application/pdf,.pdf" hidden>
+        <div id="drop-zone" class="drop-zone" role="button" tabindex="0" aria-label="拖放 PDF 文件或选择文件">
+          <svg class="upload-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 16l-4-4-4 4M12 12v9M20.4 17.5A5 5 0 0 0 18 8.2 7 7 0 0 0 4.3 10.5 4.5 4.5 0 0 0 5.5 19H7"/></svg>
+          <strong>将 PDF 拖放到这里</strong>
+          <span>或使用下方按钮从本机选择</span>
+          <button id="select-button" type="button" class="button secondary">选择 PDF 文件</button>
+        </div>
+
+        <div id="file-card" class="file-card" hidden>
+          <span class="pdf-badge">PDF</span>
+          <div class="file-details"><strong id="file-name"></strong><span id="file-meta"></span></div>
+          <button id="remove-button" class="icon-button" type="button" aria-label="移除文件">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <button id="convert-button" type="button" class="button primary" disabled>
+          <span>开始转换</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+        <p id="form-error" class="inline-error" role="alert" hidden></p>
+      </div>
+
+      <aside class="process-column" aria-labelledby="process-title">
+        <p class="eyebrow">02 / PROCESS</p>
+        <h2 id="process-title">转换流程</h2>
+        <ol class="steps">
+          <li><span>01</span><div><strong>读取 PDF</strong><small>文件仅在临时工作区内处理</small></div></li>
+          <li><span>02</span><div><strong>识别内容</strong><small>扫描页面自动使用 OCR</small></div></li>
+          <li><span>03</span><div><strong>生成 DOCX</strong><small>输出优先保持内容可编辑</small></div></li>
+        </ol>
+
+        <div class="status-area" aria-live="polite">
+          <div class="status-header"><span>CURRENT STATUS</span><b id="status-badge">IDLE</b></div>
+          <div id="status-message" class="status-message">
+            <strong>等待选择文件</strong><span>选择一个 PDF 后即可开始</span>
+          </div>
+          <div class="progress-track" role="progressbar" aria-label="转换进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <span id="progress-bar"></span>
+          </div>
+          <div class="progress-meta"><span id="progress-text">0%</span><span id="page-text">— / — 页</span></div>
+        </div>
+
+        <div id="success-panel" class="result-panel success" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1M22 4L12 14l-3-3"/></svg>
+          <div><strong>转换完成，可以下载</strong><span>Word 内容可选择、复制和修改</span><a id="download-link" class="button secondary compact" href="#">下载 DOCX</a></div>
+        </div>
+
+        <div id="error-panel" class="result-panel error" role="alert" hidden>
+          <div><strong>转换失败</strong><span id="error-message"></span><button id="retry-button" class="button secondary compact" type="button">重新转换</button></div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="feature-strip">
+    <div><span>✎</span>可编辑输出优先</div>
+    <div><span>文</span>中英文 OCR</div>
+    <div><span>↥</span>单文件 30 MB / 100 页</div>
+    <div><span>⌫</span>完成后自动清理</div>
+  </footer>
+</body>
+</html>
