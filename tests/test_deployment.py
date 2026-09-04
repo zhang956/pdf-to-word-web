@@ -29,5 +29,6 @@ def test_render_blueprint_uses_free_docker_service_without_secret_values():
     assert "healthCheckPath: /health" in blueprint
     assert "key: APP_PASSWORD" in blueprint
     assert "key: SESSION_SECRET" in blueprint
+    assert "generateValue: true" in blueprint
     assert "sync: false" in blueprint
     assert "local-dev-password" not in blueprint

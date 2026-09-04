@@ -101,7 +101,7 @@ docker run --rm -p 10000:10000 \
 1. 将项目推送到 GitHub。`说明.txt`、`.env`、上传文件和生成文件已被忽略，不要强制添加。
 2. 登录 Render，选择 **New → Blueprint**，连接 GitHub 仓库并选择本项目的 `render.yaml`。
 3. 在 Render 环境变量页面填写 `APP_PASSWORD`，供使用者登录。
-4. 为 `SESSION_SECRET` 填写至少 32 字节的随机值，可用 `openssl rand -hex 32` 在自己终端生成；不要把结果发到聊天或写入仓库。
+4. `SESSION_SECRET` 会由 Render 自动生成 256 位随机值，无需填写或复制。
 5. 部署完成后访问 Render 提供的 `https://...onrender.com` 地址。
 
 免费实例一段时间无人访问后会休眠，首次打开可能需要约一分钟；重新部署或重启会清除进行中的转换任务。文件仅保存在临时文件系统，下载完成或超过一小时后清理。
